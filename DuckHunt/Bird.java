@@ -1,5 +1,3 @@
-package duckHunt;
-
 import java.util.Vector;
 
 /**

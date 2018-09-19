@@ -1,5 +1,3 @@
-package duckHunt;
-
 
 class Player {
 

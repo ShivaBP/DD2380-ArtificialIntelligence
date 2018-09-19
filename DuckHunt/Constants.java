@@ -1,5 +1,3 @@
-package duckHunt;
-
 public class Constants {
     /**
      * These constants are used for representing the species of a bird

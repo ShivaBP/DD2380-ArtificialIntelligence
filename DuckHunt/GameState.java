@@ -1,5 +1,3 @@
-package duckHunt;
-
 /**
  * Represents a game state
  */
