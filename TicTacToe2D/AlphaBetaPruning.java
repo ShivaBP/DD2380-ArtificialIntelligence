@@ -8,12 +8,40 @@ public class AlphaBetaPruning {
 
     public static int[][] winningCombinations = { { 0, 1, 2, 3 }, { 4, 5, 6, 7 }, { 8, 9, 10, 11 }, { 12, 13, 14, 15 },
             { 0, 4, 8, 12 }, { 1, 5, 9, 13 }, { 2, 6, 10, 14 }, { 3, 7, 11, 15 }, { 0, 5, 10, 15 }, { 3, 6, 9, 12 } };
-
-    public static int[][] scoreRewards = { { 0, -1, -100, -10000, -1000000 }, { 1, 0, 0, 0, 0 }, { 100, 0, 0, 0, 0 },
-            { 10000, 0, 0, 0, 0 }, { 1000000, 0, 0, 0, 0 } };
     public static int me = 1;
     public static int opponent = 2;
     public static int depth = 2;
+
+    public static int scoreRewards(int myScore, int opponentScore) {
+        if (myScore == 0) {
+            if (opponentScore == 1) {
+                return -1;
+            }
+            if (opponentScore == 2) {
+                return -100;
+            }
+            if (opponentScore == 3) {
+                return -10000;
+            }
+            if (opponentScore == 4) {
+                return -1000000;
+            }
+        } else if (opponentScore == 0) {
+            if (myScore == 1) {
+                return 1;
+            }
+            if (myScore == 2) {
+                return 100;
+            }
+            if (myScore == 3) {
+                return 10000;
+            }
+            if (myScore == 4) {
+                return 1000000;
+            }
+        }
+        return 0;
+    }
 
     public static int evaluateScore(GameState state) {
         int totalScore = 0;
@@ -27,7 +55,7 @@ public class AlphaBetaPruning {
                     opponentsScore++;
                 }
             }
-            totalScore = totalScore + scoreRewards[myScore][opponentsScore];
+            totalScore = totalScore + scoreRewards(myScore, opponentsScore);
         }
         return totalScore;
     }
@@ -51,7 +79,7 @@ public class AlphaBetaPruning {
     public static int bestOpponentValue(GameState state, int alpha, int beta, int depth) {
         if (state.isEOG() || depth == 0)
             return evaluateScore(state);
-        int v = Integer.MAX_VALUE;  
+        int v = Integer.MAX_VALUE;
         Vector<GameState> nextStates = new Vector<>();
         state.findPossibleMoves(nextStates);
         for (GameState gamestate : nextStates) {
